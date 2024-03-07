@@ -1,0 +1,166 @@
+<%- include('partials/header.ejs') %> 
+<%- include('partials/nav.ejs') %>
+<section>
+  <form class="formulario" action="/PagoDeRecibo.ejs" method="post" id="formRecibo">
+    <div class="input-container">
+          <label for="">Num. de Folio</label>
+          <input type="number" name="folio" id="folio" value="<%=folio%>"><br>
+          <label for="">Descripcion del Vehiculo</label>
+          <input type="text" name="desc" id="desc" value="<%=desc%>"><br>
+          <label for="">Valor de Automovil</label>
+          <input type="number" name="valor" id="valor" required value="<%=valor%>" /><br>
+          <label for="">Porcentaje de pago inicial</label>
+          <input type="number" name="pinicial" id="pinicial"  required value="<%=pinicial%>"/><br>
+      </div>
+    <div>
+          <label for="">Tipo de servicio: </label>
+          <select name="plazos" id="plazos"  required value="<%=plazos%>">
+              <option value="Domicilio">Domicilio</option>
+              <option value="Comercial">Comercial</option>
+              <option value="Industrial">Industrial</option>
+          </select><br>
+    </div>
+    <div class="buttons-container">
+        <button type="submit">Calcular</button>
+        <button type="button" onclick="limpiarFormulario()">Limpiar</button>
+    </div>
+  </form>
+  <div class="res-container">
+    <aside>
+      <h3>Cotizacion del Automóvil</h3>
+      <% if(valor){
+          pinicial = valor * (pinicial / 100);
+          let plazo = (valor - pinicial) / plazos;
+          plazo = plazo.toFixed(2);
+      %>
+      <table id="contabla">
+        <tr>
+          <th>Folio</th>
+          <td><%=folio%></td>
+        </tr>
+        <tr>
+          <th>Descripcion</th>
+          <td><%=desc%></td>
+        </tr>
+        <tr>
+          <th>Pago inicial</th>
+          <td>$<%=pinicial%></td>
+        </tr>
+        <tr>
+          <th>Total a financiar</th>
+          <td>$<%=valor%></td>
+        </tr>
+        <tr>
+          <th>Plazos a meses</th>
+          <td><%=plazos%> meses</td>
+        </tr>
+        <tr>
+          <th>El valor de la cuota mensual es</th>
+          <td>$<%=plazo%></td>
+        </tr>
+      </table>
+      <% } %>        
+    </aside>
+  </div>
+</section>
+
+<%- include('partials/footer.ejs') %>
+
+<script>
+  function limpiarFormulario() {
+      document.getElementById("formCotizacion").reset();
+      document.getElementById("folio").value = "";
+      document.getElementById("desc").value = "";
+      document.getElementById("valor").value = "";
+      document.getElementById("pinicial").value = "";
+      document.getElementById("plazos").value = "12"; 
+      document.getElementById("contabla").innerHTML=""
+
+  }
+</script>
+
+
+<style>
+  /* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.section {
+    padding: 20px;
+}
+
+/* Estilos del formulario */
+.formulario {
+    margin-bottom: 20px;
+}
+
+.input-container {
+    margin-bottom: 15px;
+}
+
+.input-container label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-container input,
+.input-container select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.buttons-container button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+.buttons-container button a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.buttons-container button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos del resultado */
+.res-container {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+.res-container h3 {
+    margin-bottom: 15px;
+}
+
+.res-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.res-container th,
+.res-container td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+.res-container th {
+    background-color: #f2f2f2;
+}
+</style>
