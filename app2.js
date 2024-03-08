@@ -6,7 +6,7 @@ import http from 'http';
 import { fileURLToPath } from 'url';
 import json from 'body-parser';
 import path from 'path';
-import misRutas from './ROUTER/index.js'
+import misRutas from './router/index.js'
 
 
 
