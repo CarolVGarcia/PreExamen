@@ -1,8 +1,7 @@
-import express from "express";
-import json from 'body-parser';
-import { render } from 'ejs';
+import { Router } from "express";
 
-const router = express.Router();
+const router = Router();
+
 
 // Configurar primer ruta
 router.get("/", (req, res) => {
