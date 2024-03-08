@@ -1,8 +1,6 @@
 import express from "express";
 
-export const router = express.Router();
-
-export default { router };
+const router = express.Router();
 
 // Configurar primer ruta
 router.get("/", (req, res) => {
@@ -68,3 +66,6 @@ router.post("/PagoDeRecibo", (req, res) => {
   };
   res.render("PagoDeRecibo", params);
 });
+
+
+export default { router };
