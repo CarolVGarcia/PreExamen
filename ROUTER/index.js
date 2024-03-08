@@ -44,7 +44,7 @@ router.post("/PagoDeRecibo", (req, res) => {
   const subtotalConDescuento = subtotal - descuentoAplicado;
 
   // Calcular el impuesto
-  const impuesto = 0.16 * subtotalConDescuento;
+  const impuesto = 0.16 * subtotal;
 
   // Calcular el total a pagar
   const total = subtotalConDescuento + impuesto;
