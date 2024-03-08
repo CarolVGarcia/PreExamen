@@ -1,82 +1,70 @@
-import express from 'express';
-import json from 'body-parser';
+import express from "express";
 
 export const router = express.Router();
 
-router.get('/', (req, res)=>{
+export default { router };
 
-    res.render('index',{titulo:"Mis practicas js", nombre:"Vazquez Garcia Carol"})
+// Configurar primer ruta
+router.get("/", (req, res) => {
+  res.render("index", { titulo: "Pre Examen Carol Vazquez" });
+});
 
-
-})
-/*
-router.get('/tabla',(req,res)=>{
-    //parametros
-    const params = {
-        numero:req.query.numero
-    }
-    res.render ('tabla',params)
-})
-
-router.post('/tabla',(req,res)=>{
-    //parametros
-    const params = {
-        numero:req.body.numero 
-    }
-    res.render ('tabla',params)
-})
-*/
 router.get("/PagoDeRecibo", (req, res) => {
-    const params = {
-      valor: req.query.valor,
-      pInicial: req.query.pInicial,
-      plazos: req.query.plazos,
-      folio: req.query.folio,
-      descripcion: req.query.descripcion,
-    };
-    res.render("PagoDeRecibo", params);
-  });
-  
-  router.post("/PagoDeRecibo", (req, res) => {
-    const params = {
-      valor: req.body.valor,
-      pInicial: req.body.pInicial,
-      plazos: req.body.plazos,
-      folio: req.body.folio,
-      descripcion: req.body.descripcion,
-    };
-    res.render("PagoDeRecibo", params);
-  });
-  
-/*router.post('/tabla',(req,res)=>{
+  const params = {
+    titulo: "PreExamen Carol Vazquez ",
+    numero: req.query.numero,
+    nombre: req.query.nombre,
+    domicilio: req.query.domicilio,
+    servicio: req.query.servicio,
+    kwConsumidos: req.query.kwConsumidos,
+    isPost: false,
+  };
+  res.render("PagoDeRecibo", params);
+});
 
-})*/
-let rows;
+router.post("/PagoDeRecibo", (req, res) => {
+  const precios = [1.08, 2.5, 3.0];
 
-/*router.get('/alumnos',async(reg,res)=>{
-    rows = await alumnoDb.mostrarTodos();
-    res.render('alumnos',{reg:rows});
-});*/
+  const { numero, nombre, domicilio, servicio, kwConsumidos } = req.body;
+  const precioKw = precios[servicio * 1];
+  const tipoDeServicio = servicio == 0 ? 'Domestico' :  servicio == 1 ? 'Comercial' : 'Industrial'
+  const subtotal = precioKw * kwConsumidos;
 
-let params;
+  // Calcular el descuento
+  let descuento = 0;
+  if (kwConsumidos <= 1000) {
+    descuento = 0.1;
+  } else if (kwConsumidos > 1000 && kwConsumidos <= 10000) {
+    descuento = 0.2;
+  } else {
+    descuento = 0.5;
+  }
 
-/*router.post('/alumnos',async(req,res)=>{
-    try{
-        params = {
-            matricula:req.body.matricula,
-            nombre:req.body.nombre,
-            domicilio:req.body.domicilio,
-            sexo:req.body.sexo,
-            especialidad:req.body.especialidad
-        }
-       const res = await alumnoDb.insertar(params);
-    }catch(error){
-        console.error(error)
-        res.status(400).send("Sucedio un error: " + error);
-    }
+  // Aplicar el descuento al subtotal
+  const descuentoAplicado = subtotal * descuento;
+  const subtotalConDescuento = subtotal - descuentoAplicado;
 
-    rows = await alumnoDb.mostrarTodos();
-    res.render('alumnos',{reg:rows});
-});*/
+  // Calcular el impuesto
+  const impuesto = 0.16 * subtotalConDescuento;
 
-export default {router}
+  // Calcular el total a pagar
+  const total = subtotalConDescuento + impuesto;
+
+  // Actualizar el objeto 'resultado'
+  const params = {
+    titulo: "Pre Examen Carol Vazquez",
+    numero,
+    nombre,
+    domicilio,
+    servicio: tipoDeServicio,
+    kwConsumidos,
+    precioKw,
+    subtotal,
+    descuento: descuentoAplicado, // Actualizado para reflejar el descuento aplicado
+    subtotalConDescuento,
+    impuesto,
+    total,
+    isPost: true,
+  };
+  res.render("PagoDeRecibo", params);
+});
