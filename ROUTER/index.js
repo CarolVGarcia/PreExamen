@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 
 router.get("/PagoDeRecibo", (req, res) => {
   const params = {
-    titulo: "PreExamen Carol Vazquez ",
+    titulo: "PreExamen Carol Vazquez",
     numero: req.query.numero,
     nombre: req.query.nombre,
     domicilio: req.query.domicilio,
@@ -70,4 +70,4 @@ router.post("/PagoDeRecibo", (req, res) => {
 });
 
 
-export default { router };
+export default router;
