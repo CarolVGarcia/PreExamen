@@ -11,7 +11,7 @@ import misRutas from './ROUTER/index.js'
 
 
 
-const puerto = 80;
+const puerto = 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
