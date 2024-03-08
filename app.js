@@ -24,7 +24,7 @@ const main = express();
 
 main.set("view engine", "ejs");
 main.set(express.static(__dirname+ '/PUBLIC'));
-main.use('/img', express.static(path.join(__dirname, 'public', 'img')));
+main.use('/img', express.static(path.join(__dirname, 'PUBLIC', 'img')));
 main.use(json.urlencoded({extendeds:true}))
 main.use(misRutas.router);
 
