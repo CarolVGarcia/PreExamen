@@ -1,4 +1,6 @@
 import express from "express";
+import json from 'body-parser';
+import { render } from 'ejs';
 
 const router = express.Router();
 
